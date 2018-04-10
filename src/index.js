@@ -3,13 +3,6 @@ import ReactDOM from 'react-dom';
 import './css/index.css';
 import logo from './image/logo.svg'
 
-////import App from './containers/app.js';
-
-////Het moet mogelijk zijn om taken toe te voegen
-////Het moet mogelijk zijn om taken te verwijderen
-////Het moet mogelijk zijn om taken te markeren als voltooid
-////Het moet mogelijk zijn om taken te demarkeren
-
 class Checkbox extends React.Component {
     constructor(props) {
         super(props);
@@ -57,9 +50,9 @@ class Task extends React.Component {
             <li>
                 <div>
                     <Checkbox />
-                    <span>{this.props.taskName}</span>
-                    <button className='blue' waves='light' icon="create" onClick={this.edit} />
-                    <button className='blue' waves='light' icon="delete" onClick={this.remove} />
+                    <label className="labelTaskName">{this.props.taskName}</label>
+                    <button className='waves-effect waves-light btn' onClick={this.edit}><i className="material-icons">create</i></button>
+                    <button className='waves-effect waves-light btn' onClick={this.remove}><i className="material-icons">delete</i></button>
                 </div>
             </li>
         )
@@ -68,12 +61,10 @@ class Task extends React.Component {
         return (
             <li>
                 <div>
-                    <label>
-                        <Checkbox />
-                        <input type="text" ref="newTaskName" value={this.props.taskName} />
-                    </label>
-                    <button floating className='blue' waves='light' icon="save" onClick={this.save} />
-                    <button floating className='blue' waves='light' icon="delete" onClick={this.remove} />
+                    <Checkbox />
+                    <input className="inputTaskName" type="text" ref="newTaskName" value={this.props.taskName} />
+                    <button className='waves-effect waves-light btn' onClick={this.save}><i className="material-icons">save</i></button>
+                    <button className='waves-effect waves-light btn' onClick={this.remove}><i className="material-icons">delete</i></button>
                 </div>
             </li>
         )
@@ -96,30 +87,30 @@ class TaskList extends React.Component {
             ]
         };
 
-        //this.addTask = this.addTask.bind(this);
-        //this.updateTask = this.updateTask.bind(this);
-        //this.deleteTask = this.deleteTask.bind(this);
-        //this.getTasks = this.getTasks.bind(this);
+        this.addTask = this.addTask.bind(this);
+        this.updateTask = this.updateTask.bind(this);
+        this.deleteTask = this.deleteTask.bind(this);
+        this.getTasks = this.getTasks.bind(this);
     }
 
-    //addTask(newTaskName) {
-    //    console.log('Add a Task: ' + newTaskName);
-    //    var arr = this.state.tasks;
-    //    arr.push(newTaskName);
-    //    this.setState({ tasks: arr })
-    //}
-    //updateTask(newTaskName, i) {
-    //    console.log('Update Task: ' + i + 'to: ' + newTaskName)
-    //    var arr = this.state.tasks;
-    //    arr[i] = newTaskName;
-    //    this.setState({ tasks: arr });
-    //}
-    //deleteTask(i) {
-    //    console.log('Removing Task: ' + i)
-    //    var arr = this.state.tasks;
-    //    arr.splice(i, 1);
-    //    this.setState({ tasks: arr });
-    //}
+    addTask(createTaskName) {
+        console.log('Add a Task: ' + createTaskName);
+        var arr = this.state.tasks;
+        arr.push(createTaskName);
+        this.setState({ tasks: arr })
+    }
+    updateTask(newTaskName, i) {
+        console.log('Update Task: ' + i + 'to: ' + newTaskName)
+        var arr = this.state.tasks;
+        arr[i] = newTaskName;
+        this.setState({ tasks: arr });
+    }
+    deleteTask(i) {
+        console.log('Removing Task: ' + i)
+        var arr = this.state.tasks;
+        arr.splice(i, 1);
+        this.setState({ tasks: arr });
+    }
     getTasks(taskname, i) {
         return (
             <Task key={i} index={i} taskName={taskname} updateTaskName={this.updateTask} deleteTaskfromList={this.deleteTask} />
@@ -127,17 +118,19 @@ class TaskList extends React.Component {
     }
 
     render() {
+
         return (
             <div>
-                <div>
-                    <div className="input-field inline" >
-                        <input type="text" ref="newTaskName" />
-                    </div>
-                    <button className='btn' waves='light' icon='add' />
+                <div className="taskAddForm">
+                    <form>
+                        <input type="text" ref="createTaskName" />
+                        <button className='btn' onClick={this.addTask}><i className="material-icons">add</i></button>
+                    </form>
                 </div>
+                <hr />
                 <div className="taskList">
                     <ul>
-                        {/*{this.state.tasks.map(this.getTasks)}*/}
+                        {this.state.tasks.map(this.getTasks)}
                     </ul>
                 </div>
 
